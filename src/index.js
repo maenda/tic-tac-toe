@@ -52,7 +52,7 @@ class Game extends React.Component {
     this.state = {
       history: [{
         squares: Array(9).fill(null),
-        currentLocation: null,
+        gridLocation: null,
       }],
       stepNumber: 0,
       xIsNext: true,
@@ -72,7 +72,7 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
-        currentLocation: i,
+        gridLocation: i,
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
@@ -90,11 +90,14 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const currentLocation = current.gridLocation;
+    let classes = '';
 
     const moves = history.map((step, move) => {
-      const currentLocation =
-        (step.currentLocation !== null)
-          ? `(${findCurrentSquare(step.currentLocation)})`
+      classes = (currentLocation === step.gridLocation) ? 'bold' : '';
+      const gridLocation =
+        (step.gridLocation !== null)
+          ? `(${findCurrentSquare(step.gridLocation)})`
           : '';
 
       const desc = move
@@ -102,9 +105,15 @@ class Game extends React.Component {
         : 'Go to game start';
 
         return (
-          <li key={move}>
-            <button onClick={() => this.jumpTo(move)}>
-              {desc} {currentLocation}
+          <li
+            className={classes}
+            key={move}
+          >
+            <button
+              onClick={() => this.jumpTo(move)}
+              className={classes}
+            >
+              {desc} {gridLocation}
             </button>
           </li>
         )
@@ -158,7 +167,7 @@ function calculateWinner(squares) {
   return null;
 }
 
-function findCurrentSquare(currentLocation) {
+function findCurrentSquare(gridLocation) {
   const squares = [
     [1, 1],
     [1, 2],
@@ -171,5 +180,5 @@ function findCurrentSquare(currentLocation) {
     [3, 3],
   ];
 
-  return squares[currentLocation];
+  return squares[gridLocation];
 }
