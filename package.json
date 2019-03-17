@@ -2,6 +2,7 @@
   "name": "tic-tac-toe",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://maenda.github.io/tic-tac-toe",
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
