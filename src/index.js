@@ -93,7 +93,7 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const currentLocation =
-        step.currentLocation
+        (step.currentLocation !== null)
           ? `(${findCurrentSquare(step.currentLocation)})`
           : '';
 
