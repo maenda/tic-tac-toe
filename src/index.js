@@ -1,3 +1,6 @@
+// https://stackoverflow.com/questions/36415904/is-there-a-way-to-use-map-on-an-array-in-reverse-order-with-javascript
+// https://jrsinclair.com/articles/2016/gentle-introduction-to-javascript-tdd-intro/
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';

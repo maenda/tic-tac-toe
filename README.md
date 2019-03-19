@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+It's based on the reactjs.org tutorial found [here](https://reactjs.org/tutorial/tutorial.html)
+
 Check it out [here](https://maenda.github.io/tic-tac-toe/)
 
 ## Available Scripts
