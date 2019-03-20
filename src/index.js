@@ -75,6 +75,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      movesAsc: 'Show descending',
     }
   }
 
@@ -105,37 +106,52 @@ class Game extends React.Component {
     });
   }
 
+  reverseMoveList() {
+    const directionText = this.state.movesAsc;
+
+    return this.setState({
+      movesAsc: directionText === 'Show ascending' ? 'Show descending' : 'Show ascending',
+    });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
     const currentLocation = current.gridLocation;
+    const directionText = this.state.movesAsc;
+    const descendingOrder = directionText !== 'Show descending';
+    const historyList = !descendingOrder ? history : history.slice(0).reverse();
+
     let classes = '';
 
-    const moves = history.map((step, move) => {
+    const moves = historyList.map((step, move) => {
+      const numMoves = historyList.length - 1;
+      const moveStepper = descendingOrder ? (numMoves - move) : move;
+
       classes = (currentLocation === step.gridLocation) ? 'bold' : '';
       const gridLocation =
         (step.gridLocation !== null)
           ? `(${findCurrentSquare(step.gridLocation)})`
           : '';
 
-      const desc = move
-        ? `Go to move #${move}`
+      const desc = moveStepper
+        ? `Go to move #${moveStepper}`
         : 'Go to game start';
 
-        return (
-          <li
+      return (
+        <li
+          className={classes}
+          key={moveStepper}
+        >
+          <button
+            onClick={() => this.jumpTo(moveStepper)}
             className={classes}
-            key={move}
           >
-            <button
-              onClick={() => this.jumpTo(move)}
-              className={classes}
-            >
-              {desc} {gridLocation}
-            </button>
-          </li>
-        )
+            {desc} {gridLocation}
+          </button>
+        </li>
+      )
     });
 
     let status = winner
@@ -153,6 +169,11 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <ol>{moves}</ol>
+          <button
+            onClick={() => this.reverseMoveList()}
+          >
+            {directionText}
+          </button>
         </div>
       </div>
     );
